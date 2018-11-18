@@ -1,0 +1,30 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+python-dotenv = "*"
+flask-wtf = "*"
+flask-ckeditor = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+flask-email = "*"
+bootstrap-flask = "*"
+flask-moment = "*"
+flask-mail = "*"
+flask-login = "*"
+pillow = "*"
+flask-whooshee = "*"
+flask-sslify = "*"
+gunicorn = "*"
+"psycopg2" = "*"
+"psycopg2-binary" = "*"
+
+[dev-packages]
+watchdog = "*"
+faker = "*"
+
+[requires]
+python_version = "3.6"

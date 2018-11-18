@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}类别管理{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h2>
+            <small class="text-muted">文章类别，共：<span style="color:red">{{ categories|length }}</span> 个</small>
+            <span class="float-right"><a class="btn btn-primary btn-sm" href="{{ url_for('admin.new_category') }}">新建类别</a></span>
+        </h2>
+    </div>
+
+    {% if categories %}
+        <table class="table table-hover">
+            <thead>
+            <tr class="table-primary">
+                <th scope="col">No.</th>
+                <th scope="col">类别名称</th>
+                <th scope="col">类别文章数</th>
+                <th scope="col">操作</th>
+            </tr>
+            </thead>
+
+            {% for category in categories %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a href="{{ url_for('blog.by_category', category_id=category.id) }}">{{ category.name }}</a>
+                    </td>
+                    <td>{{ category.posts | length }}</td>
+                    <td>
+                        {% if category.id != 1 %}
+                            <a class="btn btn-info btn-sm" href="{{ url_for('admin.edit_category', category_id=category.id) }}">编辑类别</a>
+
+                            <form class="inline" method="post"
+                                  action="{{ url_for('admin.delete_category', category_id=category.id) }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('删除类别下的文章将归到“default”类别中，Are you sure?');">删除类别
+                                </button>
+                            </form>
+                        {% else %}
+                        <span class="badge badge-secondary">默认类别</span><br>
+                        <span class="badge badge-primary">不能修改</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="tip"><h5>No categories.</h5></div>
+    {% endif %}
+{% endblock %}

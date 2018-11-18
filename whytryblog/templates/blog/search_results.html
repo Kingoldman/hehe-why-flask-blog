@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block title %}Search：{{ whysearch }}{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h4>关键字：<strong><span style="color:red">{{ whysearch }}</span></strong>，文章：<strong><span style="color:red">{{all_search_posts_items | length}}</span></strong>  篇。评论：<strong><span style="color:red">{{all_search_comments_items | length }}</span></strong> 条。
+        </h4>
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
+                <a class="nav-item nav-link {% if search_category == 'post' %}active{% endif %}"
+                   href="{{ url_for('blog.search', whysearch=whysearch, search_category='post') }}">有关文章</a>
+                <a class="nav-item nav-link {% if search_category == 'comment' %}active{% endif %}"
+                   href="{{ url_for('blog.search', whysearch=whysearch, search_category='comment') }}">有关评论</a>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            {% if results %}
+                {% for item in results %}
+                    {% if search_category == 'post' %}
+                        {% include 'blog/_search_result_posts.html' %}
+                    {% else %}
+                        {% include 'blog/_search_result_comments.html' %}
+                    {% endif %}
+                {% endfor %}
+
+            {% else %}
+                <h5 class="tip">无结果。</h5>
+            {% endif %}
+        </div>
+    </div>
+    {% if results %}
+        <div class="page-footer">
+            {{ render_pagination(pagination, align='right') }}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
+    <title>{% block title %}{% endblock %}</title>
+
+
+    <link href="{{url_for('static',filename='css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="screen">
+    <link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static',filename='css/custom.min.css')}}" rel="stylesheet" type="text/css">
+
+    <link href="{{url_for('static',filename='css/style.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static',filename='favicon.ico')}}" rel="icon">
+
+    {% endblock %}
+  </head>
+
+  <body>
+    {% block nav %}
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+          <div class = "container">
+              <a class="navbar-brand" href="{{ url_for('blog.index')}}">{{admin.name}}</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarColor01">
+                <div class="navbar-nav mr-auto">
+                    <a class="nav-item nav-link" href="{{ url_for('blog.index')}}">主页</a>
+                    <a class="nav-item nav-link" href="{{ url_for('blog.about')}}">关于</a>      
+                </div>
+
+                <div class="navbar-nav ml-auto">
+
+                  <form class="form-inline my-2 my-lg-0" action="{{url_for('blog.search')}}">
+                      <input class="form-control mr-sm-2" name ="whysearch" type="text" placeholder="Search" required>
+                      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                  </form>
+
+                  {% if not current_user.is_authenticated %}
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="nav-item nav-link" href="{{ url_for('auth.login',next = request.full_path)}}">Login</a>
+                  {% else %}
+                    &nbsp;&nbsp;&nbsp;
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{admin.name}}</a>
+                      <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item dropdown" href="{{url_for('admin.manage_category')}}">文章类别管理</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item dropdown" href="{{url_for('admin.manage_post')}}">文章管理</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item dropdown" href="{{url_for('admin.manage_comment')}}">评论管理</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{url_for('admin.settings')}}">博客设置</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url_for('auth.logout',next = request.full_path)}}">Logout</a>
+                      </div>
+                    </li>
+                  {% endif %}
+
+                </div>
+              </div>
+        </div>
+      </nav>
+    {% endblock nav %}
+
+    <div class="container">
+      <div class="page-header">
+      {% for message in get_flashed_messages(with_categories =True) %}
+      <!--flash('1','danger')-->
+        <div class="alert alert-dismissible alert-{{message[0]}}">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {{message[1]}}
+        </div>
+      {% endfor %}
+      </div>
+
+      {% block content %}
+      {% endblock content %}
+
+    </div>
+
+    {% block footer %}
+      <footer class="footer">
+        <div class="container">
+          <span class="text-muted">&copy; 2018 why.All Rights Reserved.</span>
+        </div>
+      </footer>
+    {% endblock footer %}
+
+
+    {% block scripts %}
+      <script src="{{ url_for('static',filename = 'js/jquery.min.js') }}"></script>
+      <script src="{{ url_for('static',filename = 'js/popper.min.js') }}"></script>
+      <script src="{{ url_for('static',filename = 'js/bootstrap.min.js') }}"></script>
+      <script src="{{ url_for('static',filename = 'js/custom.js') }}"></script>
+      {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
+      {{ moment.locale(auto_detect = True) }}
+      
+
+    {% endblock %}
+
+  </body>
+</html>

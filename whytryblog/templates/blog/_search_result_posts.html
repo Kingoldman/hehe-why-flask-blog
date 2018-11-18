@@ -1,0 +1,40 @@
+
+<div class="card border-secondary mb-4">
+	<div class="card-header">
+	  	<h1><a href="{{ url_for('blog.show_post',post_id = item.id) }}">{{ item.title }}</a></h1>
+	</div>
+
+  	<div class="card-body">
+	  	<p class = "blog-post-meta">
+	  		<span class="glyphicon glyphicon-user">
+		  	</span>：
+		  	<a href="#">{{admin.name}}</a>
+		  	&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		  	<span class="glyphicon glyphicon-folder-open">
+		  	</span>：
+		  	<a href="{{ url_for('blog.by_category',category_id = item.category.id) }}">{{ item.category.name }}</a>
+		  	&nbsp;&nbsp;&nbsp;&nbsp;
+
+		  	<span class="glyphicon glyphicon-comment">
+		  	</span>：
+		  	<a href="{{ url_for('blog.show_post',post_id = item.id) }}#comments">{{ item.get_all_reviewed_comments() | length }}</a>
+		  	&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+	  		<span class="glyphicon glyphicon-calendar">
+	  		</span>：
+	  		{{ moment(item.timestamp).format('lll')}}
+		</p>
+
+		<hr class="my-4">
+
+		<p class = "note">
+			{{ item.body | striptags | truncate }}
+		</p>
+
+		<p class="lead">
+			<a class="btn btn-primary btn-lg" href="{{ url_for('blog.show_post',post_id = item.id) }}" role="button">Read More</a>
+		</p>
+  	</div>
+</div>

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block title %} {{post.title}}{% endblock %}
+
+{% block content %}
+		<div class = "row">
+		    <div class="col-sm-8">
+			{% if post %}
+					<div class="card border-secondary mb-4">
+						<div class="card-header">
+						  	<h1><a href="{{ url_for('blog.show_post',post_id = post.id) }}">{{ post.title }}</a></h1>
+						</div>
+
+					  	<div class="card-body">
+						  	<p class = "blog-post-meta">
+						  
+							  	<span class="glyphicon glyphicon-user">
+							  	</span>：
+							  	<a href="#">{{admin.name}}</a>
+							  	&nbsp;&nbsp;&nbsp;&nbsp;
+							
+							  	<span class="glyphicon glyphicon-folder-open">
+							  	</span>：
+							  	<a href="{{ url_for('blog.by_category',category_id = post.category.id) }}">{{ post.category.name }}</a>
+							  	&nbsp;&nbsp;&nbsp;&nbsp;
+
+							  	<span class="glyphicon glyphicon-comment">
+							  	</span>：
+							  	<a href="{{ url_for('blog.show_post',post_id = post.id) }}#comments">{{ post.get_all_reviewed_comments() | length }}</a>
+							  	&nbsp;&nbsp;&nbsp;&nbsp;
+
+	
+						  		<span class="glyphicon glyphicon-calendar">
+						  		</span>：
+						  		{{ moment(post.timestamp).format('lll') }}
+
+							</p>
+
+
+							<p class = "note">
+								{{ post.body | safe }}
+							</p>
+					  	</div>
+					</div>
+
+					{% include 'blog/_comment.html' %}
+	
+			{% else %}
+			<div class="tip">
+				<h5>无。</h5>
+			</div>
+			{% endif %}
+		</div>
+
+		<div class="col-sm-4">
+		    {% include 'blog/_sidebar.html' %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    //增加一个img元素在验证码标签内，因为这些标签是quick_form自动生成的，所以我们要采用动态添加的方式
+    function create_verify_code()
+    {
+        var img = $('<img id="verify_img" src="{{ url_for('blog.get_verify_code', _external=True) }}">');
+        $("#verification_code").before(img);
+    }
+    //开始创建验证码图片
+    create_verify_code();
+    $(document).ready(function(){
+        //点击验证码刷新，主要采取重设src属性，属性每次都要不一样，所以在网址后面增加参数
+        $("img").click(function(){
+            var img_url = "{{ url_for('blog.get_verify_code', _external=True) }}?d=" + Math.random();
+            $(this).attr("src", img_url);
+        });
+    });
+</script>
+{% endblock %}

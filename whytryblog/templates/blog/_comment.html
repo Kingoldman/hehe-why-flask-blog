@@ -1,0 +1,96 @@
+{% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+<div class="comments" id="comments">
+	{% if request.args.get('reply') %}
+		<div class="alert alert-dismissible alert-info">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>回复 ：<strong>{{ request.args.get('author') }}</strong>
+		</div>
+	{% endif %}
+	<br>
+
+	<h4>
+		<span class="badge badge-primary">发表评论</span>
+
+		{% if current_user.is_authenticated %}
+	        <form class="float-right" method="post"
+	              action="{{ url_for('admin.set_comment', post_id=post.id, next=request.full_path) }}">
+	            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+	            {% if post.can_comment %}
+		            <button type="submit" class="btn btn-success btn-sm">
+		               评论已启用
+		            </button>
+		        {% else %}
+			        <button type="submit" class="btn btn-warning btn-sm">
+			         	评论已禁用
+			        </button>
+		        {% endif %}
+	        </form>
+	    {% endif %}
+	</h4><br>
+	
+	{% if post.can_comment %}
+		<div id="comment-form">
+	        {{ render_form(form, action=request.full_path,button_map={'submit': 'outline-primary'}) }}
+	    </div>
+	{% endif %}
+
+    <h4>
+    	<span class="badge badge-primary">最新评论：{{ post.get_all_reviewed_comments() | length }} 条</span>
+    </h4>
+
+    {% if comments %}
+        <div class="list-group">
+        	{% for comment in comments %}
+
+			  <li class="list-group-item list-group-item-action flex-column align-items-start">
+			    <div class="d-flex w-100 justify-content-between">
+				    <h5 class="mb-2">
+				    	{% if comment.from_admin %}
+				    		<strong>{{ admin.name }}</strong>
+				    		<span class="badge badge-primary">Admin</span>
+				    	{% else %}
+				    		<strong>{{ comment.author }}</strong>
+				    	{% endif %}
+				    	{% if comment.replied %}
+				    	<span class="badge badge-secondary">Reply</span>
+				    	{% endif %}
+				  	</h5>
+
+				    <small data-toggle="tooltip" data-placement="top" data-delay="250" data-timestamp="{{ comment.timestamp.strftime('%Y-%m-%dT%H:%M:%SZ') }}">
+				    	{{ moment(comment.timestamp).fromNow(refresh = True) }}
+				    </small>
+
+			    </div>
+
+			    {% if comment.replied %}
+			    <!--当前是对评论的回复-->
+			    <p class="alert alert-dark reply-body">
+			    		<strong>{{ comment.replied.author }}：</strong><br>
+			    		{{ comment.replied.body | truncate }}
+			    </p>
+			    {% endif %}
+
+			    <p class="mb-1">{{ comment.body }}</p>
+
+			    <div class="float-right">
+
+			    	<a class="btn btn-outline-primary btn-sm" href="{{ url_for('blog.reply_comment',comment_id = comment.id) }}">回复</a>
+
+			    	<a class="btn btn-outline-success btn-sm" href="mailto:{{ comment.email }}">Email</a>
+
+			    </div>
+			  </li>
+			  {% endfor%}
+		</div>
+
+    {% else %}
+        <div class="tip"><h5>No comments.</h5></div>
+    {% endif %}
+</div>
+
+{% if comments %}
+    {{ render_pagination(pagination, fragment='#comments') }}
+{% endif %}
+
+

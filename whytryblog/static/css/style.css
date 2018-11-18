@@ -1,0 +1,129 @@
+
+
+body{
+  	padding-top:0px;
+}
+
+.page-header{
+	margin-top:3.5rem;
+}
+.row{
+	margin-top:4rem;
+}
+
+.jumbotron{
+	margin-bottom:1rem;
+}
+
+h5.text-muted{
+	margin-bottom:2.5rem;
+	margin-top:0.5rem;
+}
+
+h1.display-6{
+	margin-bottom:1.25rem;
+}
+
+p.blog-post-meta{
+	margin-bottom:1.25rem;
+	color:#999;
+}
+
+p.note{
+	margin-bottom:1.5rem;
+}
+p.lead{
+	margin-bottom:1rem;
+}
+
+h1.display-3{
+	font-weight:500;
+	font-size:2.5rem;
+}
+.card-header{
+	padding: 1.5rem 1.25rem;
+}
+.card-body{
+	padding: 1.25rem 1.5rem;
+}
+
+h1{
+	margin-bottom:0rem;
+}
+.comments{
+	margin:40px 0;
+	padding-top: 3.25rem;
+}
+.comments .list-group .list-group-item{
+	margin-bottom:10px;
+	border:1.55px solid rgba(0, 0, 0, 0.125);
+}
+
+#comment-form{
+	margin-bottom:3.5rem;
+}
+.reply-body{
+	margin-top:10px;
+}
+.alert-dark{
+	color:#000000;
+	background:#bbbbbb55;
+}
+strong{
+	color:#000000;
+}
+#login-form{
+  width:100%;
+  max-width:330px;
+  padding:15px;
+  margin:auto;
+}
+.loginhead{
+  margin-top:3rem;
+  margin-bottom:2.5rem;
+  text-align:center;
+}
+
+
+.tip { /* from github.com */
+    color: black !important;
+    position: relative;
+    padding: 40px;
+    text-align: center;
+    background-color: #fafbfc;
+    border: 1px solid #e1e4e8;
+    border-radius: 3px;
+    box-shadow: inset 0 0 10px rgba(27, 31, 35, 0.05);
+}
+
+footer{
+  margin-top:30px;
+}
+
+.why-new-post{
+  margin-top:2.5rem;
+}
+
+#btn_top {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: none;
+}
+
+#toTop{
+    width: 100px;
+    z-index: 10;
+    border: 1px solid #333;
+    background: #121212;
+    text-align: center;
+    padding: 5px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    display: none;
+    color: #fff;
+    text-transform: lowercase;
+    font-size: 0.9em;
+}

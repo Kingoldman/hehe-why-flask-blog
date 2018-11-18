@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}登录{% endblock %}
+
+{% block content %}
+      
+  <div id="login-form">
+    <div class = "loginhead">
+      <h2>&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;</h2>
+    </div>
+        {{ render_form(form,button_map={'submit': 'primary'}) }}
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    //修改提交按钮属性，上部外边界和宽度
+    $("#submit").css({
+        "width":"100%"
+        });
+</script>
+{% endblock %}
