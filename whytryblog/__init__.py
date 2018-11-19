@@ -35,7 +35,7 @@ def create_app(config_name=None):
 	register_template_context(app)
 	register_errors(app)
 	register_commands(app)
-	migrate.init_app(app,db)
+	
 
 	return app
 
@@ -82,12 +82,14 @@ def register_logging(app):
 def register_extensions(app):
 	bootstrap.init_app(app)
 	db.init_app(app)
+	migrate.init_app(app,db)
 	moment.init_app(app)
 	ckeditor.init_app(app)
 	mail.init_app(app)
 	login_manager.init_app(app)
 	csrf.init_app(app)
 	whooshee.init_app(app)
+	
 	
 
 
