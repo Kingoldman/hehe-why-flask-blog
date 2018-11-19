@@ -38,7 +38,6 @@ def create_app(config_name=None):
 	register_errors(app)
 	register_commands(app)
 
-
 	return app
 
 
@@ -84,6 +83,7 @@ def register_logging(app):
 def register_extensions(app):
 	bootstrap.init_app(app)
 	db.init_app(app)
+	migrate.init_app(app,db)
 	moment.init_app(app)
 	ckeditor.init_app(app)
 	mail.init_app(app)
@@ -92,6 +92,7 @@ def register_extensions(app):
 	#whooshee.init_app(app)
 	migrate.init_app(app,db)
 	flask_whooshalchemyplus.init_app(app)
+	
 	
 
 
