@@ -21,6 +21,8 @@ flask-sslify = "*"
 gunicorn = "*"
 "psycopg2" = "*"
 "psycopg2-binary" = "*"
+jieba = "*"
+flask-whooshalchemyplus = "*"
 
 [dev-packages]
 watchdog = "*"

@@ -8,9 +8,8 @@ from flask_ckeditor import CKEditor
 from flask_moment import Moment
 from flask_login import LoginManager
 from flask_wtf import CSRFProtect
-from flask_whooshee import Whooshee
+#from flask_whooshee import Whooshee
 from flask_migrate import Migrate
-
 
 
 bootstrap = Bootstrap()
@@ -20,7 +19,7 @@ moment = Moment()
 ckeditor = CKEditor()
 login_manager = LoginManager()
 csrf = CSRFProtect()
-whooshee = Whooshee()
+#whooshee = Whooshee()
 migrate = Migrate()
 
 

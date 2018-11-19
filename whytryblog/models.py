@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from whytryblog.extensions import db,whooshee
+from whytryblog.extensions import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
+from jieba.analyse.analyzer import ChineseAnalyzer
 
 class Admin(db.Model,UserMixin):
 	id = db.Column(db.Integer,primary_key = True)
@@ -43,8 +44,11 @@ class Category(db.Model):
 		return self.name
 
 
-@whooshee.register_model('title','body')
+#@whooshee.register_model('title','body')
 class Post(db.Model):
+
+	__searchable__ = ['title','body']
+	__analyzer__ = ChineseAnalyzer()
 
 	id = db.Column(db.Integer,primary_key = True)
 	title = db.Column(db.String(60))
@@ -61,8 +65,11 @@ class Post(db.Model):
 		return [comment for comment in self.comments if comment.reviewed]
 
 
-@whooshee.register_model('author','body')
+#@whooshee.register_model('author','body')
 class Comment(db.Model):
+
+	__searchable__ = ['author','body']
+	__analyzer__ = ChineseAnalyzer()
 
 	id = db.Column(db.Integer,primary_key = True)
 	author = db.Column(db.String(30))

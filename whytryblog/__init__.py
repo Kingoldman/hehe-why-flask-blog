@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask,render_template,request
 from whytryblog.settings import config
-from whytryblog.extensions import bootstrap,db,mail,moment,ckeditor,login_manager,csrf,whooshee,migrate
+from whytryblog.extensions import bootstrap,db,mail,moment,ckeditor,login_manager,csrf,migrate
 from whytryblog.blueprints.admin import admin_bp
 from whytryblog.blueprints.auth import auth_bp 
 from whytryblog.blueprints.blog import blog_bp
@@ -11,6 +11,8 @@ import click
 from flask_wtf.csrf import CSRFError
 import logging
 from logging.handlers import SMTPHandler,RotatingFileHandler
+import flask_whooshalchemyplus
+import datetime
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -35,7 +37,7 @@ def create_app(config_name=None):
 	register_template_context(app)
 	register_errors(app)
 	register_commands(app)
-	migrate.init_app(app,db)
+
 
 	return app
 
@@ -87,7 +89,9 @@ def register_extensions(app):
 	mail.init_app(app)
 	login_manager.init_app(app)
 	csrf.init_app(app)
-	whooshee.init_app(app)
+	#whooshee.init_app(app)
+	migrate.init_app(app,db)
+	flask_whooshalchemyplus.init_app(app)
 	
 
 
@@ -108,8 +112,9 @@ def register_template_context(app):
 	@app.context_processor
 	def make_template_context():
 		admin = Admin.query.first()
-		categories = Category.query.order_by(Category.name).all() 
-		return dict(admin = admin,categories = categories)
+		categories = Category.query.order_by(Category.name).all()
+		near_three_day_posts = Post.query.filter( Post.timestamp >= (datetime.date.today() - datetime.timedelta(3)) ).all()
+		return dict(admin = admin,categories = categories,near_three_day_posts = near_three_day_posts)
 
 #错误
 def register_errors(app):

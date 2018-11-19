@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6d9cfb7c1e641e393b7599e401fe0834286d66e7e932cbb472c0b3a1771284b7"
+            "sha256": "0e0e1ee770d7ecc80ec814f0c78cfcabc7dc35d251af5585c5c444cf712988a9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -111,6 +111,13 @@
             "index": "pypi",
             "version": "==0.1.5"
         },
+        "flask-whooshalchemyplus": {
+            "hashes": [
+                "sha256:e6429253c4a768e635459ec87d2a7ce5b4e4b8045c8210edc83632ba02468b31"
+            ],
+            "index": "pypi",
+            "version": "==0.7.5"
+        },
         "flask-whooshee": {
             "hashes": [
                 "sha256:66d8e9213df3ab1c64602ad653725fadd3204500d021fc85cec6ee3b05a10d4f"
@@ -140,6 +147,13 @@
                 "sha256:b12271b2047cb23eeb98c8b5622e2e5c5e9abd9784a153e9d8ef9cb4dd09d749"
             ],
             "version": "==1.1.0"
+        },
+        "jieba": {
+            "hashes": [
+                "sha256:de385e48582a4862e55a9167334d0fbe91d479026e5dac40e59e22c08b8e883e"
+            ],
+            "index": "pypi",
+            "version": "==0.39"
         },
         "jinja2": {
             "hashes": [

@@ -82,11 +82,17 @@ def show_post(post_id):
 				send_new_reply_email(replied_comment)
 			db.session.add(comment)
 			db.session.commit()
+
+			#加入索引
+			import flask_whooshalchemyplus
+			flask_whooshalchemyplus.index_one_model(Comment)
+
 			if current_user.is_authenticated:
 				flash("评论成功","success")
 			else:
 				send_new_comment_email(post)
 				flash("评论已提交审核","info")
+
 			return redirect(url_for('blog.show_post',post_id = post.id))
 
 	return render_template('blog/post.html',post = post,pagination = pagination,comments = comments,form = form)
@@ -108,8 +114,8 @@ def search():
 	search_category = request.args.get('search_category','post')
 	page = request.args.get('page',1,type = int)
 
-	all_search_posts_items = Post.query.whooshee_search(whysearch)
-	all_search_comments_items = Comment.query.whooshee_search(whysearch).filter_by(reviewed = True)
+	all_search_posts_items = Post.query.whoosh_search(whysearch)
+	all_search_comments_items = Comment.query.whoosh_search(whysearch).filter_by(reviewed = True)
 
 	if search_category == 'post':
 		#flask-whooshee覆盖了sqlalchemy的query对象，为其添加了whooshee_search()
@@ -120,3 +126,4 @@ def search():
 
 	results = pagination.items
 	return render_template('blog/search_results.html',whysearch = whysearch,results = results,pagination = pagination,search_category = search_category,all_search_posts_items= all_search_posts_items.all(),all_search_comments_items = all_search_comments_items.all())
+

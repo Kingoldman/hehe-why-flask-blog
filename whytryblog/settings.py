@@ -24,6 +24,8 @@ class BaseConfig(object):
 	WHOOSHEE_MIN_STRING_LEN = 1
 
 	SSL_DISABLE = True
+	
+	WHOOSH_BASE = os.path.join(basedir, 'WHOOSH_BASE_INDEX')
 
 class DevelopmentConfig(BaseConfig):
 	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir,'data-dev.db')
