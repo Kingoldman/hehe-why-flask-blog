@@ -114,8 +114,8 @@ def search():
 	search_category = request.args.get('search_category','post')
 	page = request.args.get('page',1,type = int)
 
-	all_search_posts_items = Post.query.whoosh_search(whysearch)
-	all_search_comments_items = Comment.query.whoosh_search(whysearch).filter_by(reviewed = True)
+	all_search_posts_items = Post.query.whooshee_search(whysearch)
+	all_search_comments_items = Comment.query.whooshee_search(whysearch).filter_by(reviewed = True)
 
 	if search_category == 'post':
 		#flask-whooshee覆盖了sqlalchemy的query对象，为其添加了whooshee_search()

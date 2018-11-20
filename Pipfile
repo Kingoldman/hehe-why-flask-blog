@@ -23,6 +23,8 @@ gunicorn = "*"
 "psycopg2-binary" = "*"
 jieba = "*"
 flask-whooshalchemyplus = "*"
+faker = "*"
+sendgrid = "*"
 
 [dev-packages]
 watchdog = "*"

@@ -25,7 +25,9 @@ class BaseConfig(object):
 
 	SSL_DISABLE = True
 	
-	WHOOSH_BASE = os.path.join(basedir, 'WHOOSH_BASE_INDEX')
+	#WHOOSH_BASE = os.path.join(basedir, 'WHOOSH_BASE_INDEX')
+
+	SQLALCHEMY_POOL_RECYCLE = 280
 
 class DevelopmentConfig(BaseConfig):
 	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir,'data-dev.db')

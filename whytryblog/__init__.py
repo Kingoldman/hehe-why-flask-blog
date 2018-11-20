@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask,render_template,request
 from whytryblog.settings import config
-from whytryblog.extensions import bootstrap,db,mail,moment,ckeditor,login_manager,csrf,migrate
+from whytryblog.extensions import bootstrap,db,mail,moment,ckeditor,login_manager,csrf,migrate,whooshee
 from whytryblog.blueprints.admin import admin_bp
 from whytryblog.blueprints.auth import auth_bp 
 from whytryblog.blueprints.blog import blog_bp
@@ -11,7 +11,8 @@ import click
 from flask_wtf.csrf import CSRFError
 import logging
 from logging.handlers import SMTPHandler,RotatingFileHandler
-import flask_whooshalchemyplus
+from flask.logging import default_handler
+#import flask_whooshalchemyplus
 import datetime
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
@@ -24,8 +25,8 @@ def create_app(config_name=None):
 	app.config.from_object(config[config_name])
 
 	#处理代理服务器首部
-	#from werkzeug.contrib.fixers import ProxyFix
-	#app.wsgi_app = ProxyFix(app.wsgi_app)
+	from werkzeug.contrib.fixers import ProxyFix
+	app.wsgi_app = ProxyFix(app.wsgi_app)
 
 	from flask_sslify import SSLify
 	sslify = SSLify(app)
@@ -54,26 +55,27 @@ def register_logging(app):
         '%(levelname)s in %(module)s: %(message)s'
         )
 
-	formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+	#formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+	#file_handler = RotatingFileHandler(os.path.join(basedir, 'logs/whyblog.log'),maxBytes=10 * 1024 * 1024, backupCount=10)
+	#file_handler.setFormatter(formatter)
+	#file_handler.setLevel(logging.INFO)
+	default_handler.setLevel(logging.INFO)
 
-	file_handler = RotatingFileHandler(os.path.join(basedir, 'logs/whyblog.log'),maxBytes=10 * 1024 * 1024, backupCount=10)
-
-	file_handler.setFormatter(formatter)
-	file_handler.setLevel(logging.INFO)
 
 	mail_handler = SMTPHandler(
 		mailhost=app.config['MAIL_SERVER'],
 		fromaddr=app.config['MAIL_USERNAME'],
 		toaddrs=app.config['WHYBLOG_GETMSG_EMAIL'],
-		subject='WHYblog Application Error',
+		subject='Application Error',
 		credentials=(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD']))
-
+	
 	mail_handler.setLevel(logging.ERROR)
 	mail_handler.setFormatter(request_formatter)
 
 	if not app.debug:
 		app.logger.addHandler(mail_handler)
-		app.logger.addHandler(file_handler)
+		#app.logger.addHandler(file_handler)
+		app.logger.addHandler(default_handler)
 
 
 
@@ -89,9 +91,9 @@ def register_extensions(app):
 	mail.init_app(app)
 	login_manager.init_app(app)
 	csrf.init_app(app)
-	#whooshee.init_app(app)
 	migrate.init_app(app,db)
-	flask_whooshalchemyplus.init_app(app)
+	#flask_whooshalchemyplus.init_app(app)
+	whooshee.init_app(app)
 	
 	
 
