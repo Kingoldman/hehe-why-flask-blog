@@ -23,10 +23,12 @@ gunicorn = "*"
 "psycopg2-binary" = "*"
 jieba = "*"
 flask-whooshalchemyplus = "*"
+faker = "*"
+sendgrid = "*"
 
 [dev-packages]
 watchdog = "*"
 faker = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.4"
