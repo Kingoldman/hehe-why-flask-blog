@@ -83,9 +83,6 @@ def show_post(post_id):
 			db.session.add(comment)
 			db.session.commit()
 
-			#加入索引
-			import flask_whooshalchemyplus
-			flask_whooshalchemyplus.index_one_model(Comment)
 
 			if current_user.is_authenticated:
 				flash("评论成功","success")
