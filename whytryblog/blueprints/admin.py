@@ -55,9 +55,6 @@ def new_post():
 		db.session.add(post)
 		db.session.commit()
 
-		#加入索引
-		import flask_whooshalchemyplus
-		flask_whooshalchemyplus.index_one_model(Post)
 		
 		flash("文章发表成功！","success")
 		return redirect(url_for('blog.show_post',post_id = post.id))
