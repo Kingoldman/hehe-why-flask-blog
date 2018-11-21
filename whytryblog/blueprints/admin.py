@@ -54,7 +54,6 @@ def new_post():
 		post = Post(title = title,category = category,body = body)
 		db.session.add(post)
 		db.session.commit()
-
 		
 		flash("文章发表成功！","success")
 		return redirect(url_for('blog.show_post',post_id = post.id))
