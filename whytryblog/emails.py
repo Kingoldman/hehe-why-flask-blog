@@ -15,7 +15,7 @@ def send_new_comment_email(post):
 	app = current_app._get_current_object()
 	post_url = url_for('blog.show_post', post_id=post.id, _external=True) + '#comments'
 	to = current_app.config['WHYBLOG_GETMSG_EMAIL']
-	message = Message(subject = "New comment", sender = current_app.config['WHYBLOG_GETMSG_EMAIL'],recipients=[to])
+	message = Message(subject = "New comment",recipients=[to])
 	message.html = render_template('blog/new_comment_email.html',post = post,post_url = post_url)
 	thr = Thread(target=send_async_email, args=[app, message])
 	thr.start()
@@ -29,7 +29,7 @@ def send_new_reply_email(comment):
 		to = current_app.config['WHYBLOG_GETMSG_EMAIL']
 	else:
 		to = comment.email
-	message = Message(subject = "New Reply", sender = current_app.config['WHYBLOG_GETMSG_EMAIL'],recipients=[to])
+	message = Message(subject = "New Reply",recipients=[to])
 	message.html = render_template('blog/new_reply_email.html',comment = comment,post_url = post_url)
 	thr = Thread(target=send_async_email, args=[app, message])
 	thr.start()
