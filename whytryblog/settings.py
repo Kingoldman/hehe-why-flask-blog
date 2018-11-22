@@ -9,7 +9,6 @@ class BaseConfig(object):
 
 	MAIL_SERVER = os.getenv('MAIL_SERVER','smtp.qq.com')
 	MAIL_PORT = os.getenv('MAIL_PORT','465')
-	MAIL_USE_SSL = True
 	MAIL_USE_TLS = True
 	MAIL_USERNAME = os.getenv('MAIL_USERNAME','479260115@qq.com')
 	MAIL_PASSWORD = os.getenv('SENDGRID_API_KEY','dtqoehgzpkuibgcg')
