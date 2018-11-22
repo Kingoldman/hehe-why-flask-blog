@@ -5,7 +5,7 @@ from whytryblog.forms import CommentForm,AdminCommentForm
 from whytryblog.extensions import db
 from whytryblog.utils import redirect_back,generate_verification_code
 from flask_login import current_user
-from whytryblog.emails import send_new_comment_email,send_new_reply_email
+from whytryblog.emails import send_new_comment_email,send_new_reply_email,send_new_comment_email_by_api,send_new_reply_email_by_api
 
 blog_bp = Blueprint('blog',__name__)
 
@@ -79,7 +79,8 @@ def show_post(post_id):
 			if replied_id:
 				replied_comment = Comment.query.get_or_404(replied_id)
 				comment.replied = replied_comment
-				send_new_reply_email(replied_comment)
+				#send_new_reply_email(replied_comment)
+				send_new_reply_email_by_api(replied_comment)
 			db.session.add(comment)
 			db.session.commit()
 
@@ -87,7 +88,8 @@ def show_post(post_id):
 			if current_user.is_authenticated:
 				flash("评论成功","success")
 			else:
-				send_new_comment_email(post)
+				#send_new_comment_email(post)
+				send_new_comment_email_by_api(post)
 				flash("评论已提交审核","info")
 
 			return redirect(url_for('blog.show_post',post_id = post.id))
