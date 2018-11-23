@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ba7e08544ebb230c41fc5f11f13ea8bc20eba013ebf79f3184951f5af4556e3e"
+            "sha256": "931022d692431168272b716ad6244b0d7dd1d47afa965913d3748c6636276bfd"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -41,14 +41,6 @@
             ],
             "version": "==7.0"
         },
-        "faker": {
-            "hashes": [
-                "sha256:c61a41d0dab8865b850bd00454fb11e90f3fd2a092d8bc90120d1e1c01cff906",
-                "sha256:f909ff9133ce0625ca388b6838190630ad7a593f87eaf058d872338a76241d5d"
-            ],
-            "index": "pypi",
-            "version": "==1.0.0"
-        },
         "flask": {
             "hashes": [
                 "sha256:2271c0070dbcb5275fad4a82e29f23ab92682dc45f9dfbc22c02ba9b9322ce48",
@@ -64,13 +56,6 @@
             ],
             "index": "pypi",
             "version": "==0.4.3"
-        },
-        "flask-email": {
-            "hashes": [
-                "sha256:773f0fb4e13191da43c111a00399cb070a0b978b4047786d5479d5dde0469f6b"
-            ],
-            "index": "pypi",
-            "version": "==1.4.4"
         },
         "flask-login": {
             "hashes": [
@@ -116,13 +101,6 @@
             ],
             "index": "pypi",
             "version": "==0.1.5"
-        },
-        "flask-whooshalchemyplus": {
-            "hashes": [
-                "sha256:e6429253c4a768e635459ec87d2a7ce5b4e4b8045c8210edc83632ba02468b31"
-            ],
-            "index": "pypi",
-            "version": "==0.7.5"
         },
         "flask-whooshee": {
             "hashes": [
@@ -362,13 +340,6 @@
                 "sha256:9de7c7dabcf06319becdb7e15099c44e5e34ba7062f9ba10bc00e562f5db3d04"
             ],
             "version": "==1.2.14"
-        },
-        "text-unidecode": {
-            "hashes": [
-                "sha256:5a1375bb2ba7968740508ae38d92e1f889a0832913cb1c447d5e2046061a396d",
-                "sha256:801e38bd550b943563660a91de8d4b6fa5df60a542be9093f7abf819f86050cc"
-            ],
-            "version": "==1.2"
         },
         "werkzeug": {
             "hashes": [
