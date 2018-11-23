@@ -42,6 +42,7 @@ class BaseConfig(object):
 	UPLOADED_PATH = os.path.join(basedir,'uploads')
 	#代码高亮
 	CKEDITOR_ENABLE_CODESNIPPET = True
+	CKEDITOR_CODE_THEME = 'monokai_sublime'
 
 	
 
