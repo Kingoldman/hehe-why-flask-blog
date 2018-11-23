@@ -86,6 +86,7 @@ def show_post(post_id):
 
 
 			if current_user.is_authenticated:
+				#管理员评论就不给自己发邮件了
 				flash("评论成功","success")
 			else:
 				#send_new_comment_email(post)

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+from whytryblog.blueprints import admin
+
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 class BaseConfig(object):
@@ -9,6 +11,7 @@ class BaseConfig(object):
 
 	MAIL_SERVER = os.getenv('MAIL_SERVER','smtp.qq.com')
 	MAIL_PORT = os.getenv('MAIL_PORT','465')
+	#MAIL_USE_SSL = True
 	MAIL_USE_TLS = True
 	MAIL_USERNAME = os.getenv('MAIL_USERNAME','479260115@qq.com')
 	MAIL_PASSWORD = os.getenv('SENDGRID_API_KEY','dtqoehgzpkuibgcg')
@@ -21,14 +24,24 @@ class BaseConfig(object):
 	WHYBLOG_MANAGE_POST_PER_PAGE = 15
 	WHYBLOG_COMMENT_PER_PAGE = 15
 	WHYBLOG_SEARCH_RESULT_PER_PAGE = 15
-
+	#搜索关键字长度
 	WHOOSHEE_MIN_STRING_LEN = 1
-
+	#ssl转发
 	SSL_DISABLE = True
 	
 	#WHOOSH_BASE = os.path.join(basedir, 'WHOOSH_BASE_INDEX')
-
+	
+	#pythonanywhere配置
 	SQLALCHEMY_POOL_RECYCLE = 280
+
+	#ckeditor配置
+	#使用扩展内置的本地资源
+	CKEDITOR_SERVE_LOCAL = True
+	CKEDITOR_ENABLE_CSRF = True
+	CKEDITOR_FILE_UPLOADER = 'admin.upload'
+	UPLOADED_PATH = os.path.join(basedir,'uploads')
+	#代码高亮
+	CKEDITOR_ENABLE_CODESNIPPET = True
 
 	
 

@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint,render_template,flash,url_for,current_app,request,redirect,session,make_response,abort
-from flask import Blueprint
+from flask import Blueprint,render_template,flash,url_for,current_app,request,redirect,session,make_response,abort,send_from_directory
 from flask_login import current_user,login_required
 from whytryblog.models import Admin,Post,Category,Comment
 from whytryblog.utils import redirect_back
 from whytryblog.forms import PostForm,SettingForm,CategoryForm
 from whytryblog.extensions import db
+import os,uuid
+from flask_ckeditor import upload_fail, upload_success
+
 
 admin_bp = Blueprint('admin',__name__)
 
@@ -45,7 +47,6 @@ def manage_post():
 @admin_bp.route('/new_post',methods = ['GET','POST'])
 @login_required
 def new_post():
-	current_app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'
 	form = PostForm()
 	if form.validate_on_submit():
 		title = form.title.data
@@ -197,3 +198,31 @@ def delete_category(category_id):
 	return redirect(url_for('admin.manage_category'))
 
 ##category
+#
+
+#处理图片上传
+##处理并保存上传文件
+@admin_bp.route('/files/<filename>')
+def uploaded_files(filename):
+	path = current_app.config['UPLOADED_PATH']
+	return send_from_directory(path, filename)
+
+#创建一个视图函数来获取图片文件，类似Flask内置的static端点
+@admin_bp.route('/upload', methods=['POST'])
+def upload():
+	#注意 传入request.files.get()的键必须为’upload’， 这是CKEditor定义的上传字段name值。
+	f = request.files.get('upload')# 获取上传图片文件对象
+	extension = f.filename.split('.')[1].lower()
+	if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+		return upload_fail(message='Image only!')
+	new_filename = random_filename(f.filename)
+	f.save(os.path.join(current_app.config['UPLOADED_PATH'], new_filename))
+	url = url_for('admin.uploaded_files', filename=new_filename)
+	return upload_success(url=url)
+
+#重新生成图片名字
+def random_filename(filename):
+	#扩展名
+	ext = os.path.splitext(filename)[1]
+	new_filename = uuid.uuid4().hex + ext
+	return new_filename
