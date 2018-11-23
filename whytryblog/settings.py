@@ -26,6 +26,7 @@ class BaseConfig(object):
 	WHYBLOG_SEARCH_RESULT_PER_PAGE = 15
 	#搜索关键字长度
 	WHOOSHEE_MIN_STRING_LEN = 1
+	WHOOSHEE_DIR = os.path.join(basedir, 'whooshee')
 	#ssl转发
 	SSL_DISABLE = True
 	
